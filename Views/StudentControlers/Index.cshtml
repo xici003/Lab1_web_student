@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Student>
+<a href="/Admin/Student/Add" class="btn btn-primary">Create Student</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Họ Tên</th>
+            <th>Ngày Sinh</th>
+            <th>Ngành</th>
+            <th>Giới Tính</th>
+            <th>Hệ ĐT</th>
+            <th>Địa Chỉ</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var s in Model)
+        {
+            <tr>
+                <td>@s.Id</td>
+                <td>@s.Name</td>
+                <td>@s.DateOfBorth</td>
+                @{
+                    string str = "";
+                    switch (s.Branch)
+                    {
+                        case Branch.IT:
+                            str = "CNTT";
+                            break;
+                        case Branch.CE:
+                            str = "Công Trình";
+                            break;
+                        case Branch.EE:
+                            str = "Điện - Điện tử";
+                            break;
+                        case Branch.BE:
+                            str = "Kinh tế";
+                            break;
+                    }
+                }
+                <td>@str</td>
+                <td>@(s.Gender== Gender.Male?"Nam":"Nữ")</td>
+                <td>@(s.IsRegular ? "Chính quy" : "Phi chính quy")</td>
+                <td>@s.Address</td>
+                <td>@s.Email</td>
+                <td>
+                    @if (s.Img != null)
+                    {
+                        <img src="/FileImg/@s.Img.FileName" class="w-10" style="width: 100px">
+                    }
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
